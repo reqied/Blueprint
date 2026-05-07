@@ -1,8 +1,9 @@
 ﻿<template id="project-card-template">
     <a class="card">
-        <div class="like">            
-            <img class="like-img" src="resources/images/heart.svg" alt="поставить лайк">
-        </div>
+        <span class="like" role="button" tabindex="0" aria-label="Поставить лайк" aria-pressed="false">
+            <img class="like-img" src="resources/images/heart.svg" alt="" aria-hidden="true">
+            <span class="like-count">0</span>
+        </span>
         <h1 class="project-title"></h1>
         <p class="project-description"></p>
         <div class="stack">
