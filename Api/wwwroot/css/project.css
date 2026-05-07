@@ -522,3 +522,15 @@
     }
 
 }
+.project-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.project-like {
+    flex: 0 0 auto;
+    margin-top: 8px;
+    font-size: 18px;
+}

@@ -1,4 +1,5 @@
 ﻿import {getProject} from "./api/projectApi.js";
+import {initLikeElement, toggleProjectLike} from "./likes.js";
 
 const params = new URLSearchParams(window.location.search);
 const projectId = params.get("id");
@@ -235,6 +236,7 @@ function renderProject(project) {
     const shortDescription = document.getElementById("short-description");
     const year = document.getElementById("year");
     const semester = document.getElementById("semester");
+    const like = document.getElementById("project-like");
 
     if (title) {
         title.textContent = project?.name || "Без названия";
@@ -255,6 +257,8 @@ function renderProject(project) {
         semester.textContent = project?.semester || "Семестр не указан";
     }
 
+    initLikeElement(like, project);
+
     renderMembers(project?.teamMembers);
     renderStack(project?.tags);
     generateTabs(project?.files);
@@ -262,6 +266,29 @@ function renderProject(project) {
     if (typeof window.activateTabFromHash === "function") {
         window.activateTabFromHash(false);
     }
+}
+
+function bindProjectLike() {
+    const like = document.getElementById("project-like");
+
+    if (!like) return;
+
+    like.addEventListener("click", async (event) => {
+        event.preventDefault();
+
+        try {
+            await toggleProjectLike(like, projectId);
+        } catch (error) {
+            console.error("Error toggling project like:", error);
+        }
+    });
+
+    like.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+
+        event.preventDefault();
+        like.click();
+    });
 }
 
 function renderProjectError() {
@@ -293,4 +320,5 @@ async function loadProject() {
     }
 }
 
+bindProjectLike();
 loadProject();

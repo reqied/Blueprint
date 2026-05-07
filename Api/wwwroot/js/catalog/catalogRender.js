@@ -1,4 +1,5 @@
 ﻿import {state} from "./catalogState.js";
+import {initLikeElement, toggleProjectLike} from "../likes.js";
 
 export function syncUiWithState() {
     const searchInput = document.getElementById("search-input");
@@ -172,6 +173,7 @@ export async function renderProjects(items) {
         const title = clone.querySelector(".project-title");
         const description = clone.querySelector(".project-description");
         const iconsContainer = clone.querySelector(".icons");
+        const like = clone.querySelector(".like");
 
         if (!card || !title || !description || !iconsContainer) {
             return;
@@ -179,6 +181,24 @@ export async function renderProjects(items) {
 
         card.href = `project.html?id=${project.id}`;
         title.textContent = project.name || "Без названия";
+
+        initLikeElement(like, project);
+        like?.addEventListener("click", async (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            try {
+                await toggleProjectLike(like, project.id);
+            } catch (error) {
+                console.error("Error toggling project like:", error);
+            }
+        });
+        like?.addEventListener("keydown", (event) => {
+            if (event.key !== "Enter" && event.key !== " ") return;
+
+            event.preventDefault();
+            like.click();
+        });
         description.textContent =
             project.shortDescriptionAi ||
             "Описание пока не добавлено.";

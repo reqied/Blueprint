@@ -454,3 +454,51 @@ body.filters-open {
         display: none;
     }
 }
+.like {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text);
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    user-select: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.like:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 999px;
+}
+
+.like-img {
+    width: 30px;
+    height: 30px;
+    transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.like--active .like-img {
+    filter: invert(20%) sepia(88%) saturate(5201%) hue-rotate(339deg) brightness(103%) contrast(96%);
+}
+
+.like:hover .like-img,
+.like--active .like-img {
+    transform: scale(1.08);
+}
+
+.like--loading {
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+.card .like {
+    position: absolute;
+    top: 17px;
+    right: 17px;
+    z-index: 2;
+}
+
+.card .project-title {
+    padding-right: 66px;
+}
